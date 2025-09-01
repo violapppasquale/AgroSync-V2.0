@@ -910,6 +910,20 @@
     }, 3000);
   </script>
 
+
+<script>
+function goFullscreen() {
+  const el = document.documentElement;
+  if (el.requestFullscreen) el.requestFullscreen();
+  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen(); // Safari
+  else if (el.msRequestFullscreen) el.msRequestFullscreen(); // Edge
+}
+</script>
+
+
+
+  
+
   <!-- Google Maps per ultimo -->
   <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwo0r8Kd1FVCNxFmsrZ9OqcuJsAqa_v-Q&libraries=geometry&v=quarterly&callback=initMap">
