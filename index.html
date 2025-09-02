@@ -201,12 +201,13 @@
         <button class="btn" id="btnGPS">Avvia GPS</button>
         <button class="btn ghost" id="btnFollow" disabled>Segui posizione</button>
       </div>
-      <div class="note" id="gpsInfo" style="margin-top:6px;">—</div>
 
-      <div class="row" style="margin-top:6px">
+<div class="row" style="margin-top:6px">
   <button class="btn" onclick="goFullscreen()">Schermo intero</button>
 </div>
 
+
+      <div class="note" id="gpsInfo" style="margin-top:6px;">—</div>
 
       <!-- Impostazioni conferma -->
       <div class="row" style="margin-top:8px">
@@ -275,19 +276,24 @@
 
   <!-- Beep via WebAudio: il contesto parte al click "Avvia GPS" -->
   <script>
-    let audioCtx = null;
-    function beep(ms = 220, freq = 880) {
-      try {
-        if (!audioCtx) return;
-        const o = audioCtx.createOscillator();
-        const g = audioCtx.createGain();
-        o.connect(g); g.connect(audioCtx.destination);
-        o.type = 'sine'; o.frequency.value = freq;
-        g.gain.value = 0.05;
-        o.start();
-        setTimeout(() => { o.stop(); }, ms);
-      } catch (e) {}
+    function beep(ms = 800, freq = 880, vibrate = true) {
+  try {
+    if (!audioCtx) return;
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.connect(g); g.connect(audioCtx.destination);
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.value = 0.05;
+    o.start();
+    setTimeout(() => { o.stop(); }, ms);
+
+    // Se supportato, vibra per la stessa durata del beep
+    if (vibrate && navigator.vibrate) {
+      navigator.vibrate(ms);
     }
+  } catch (e) {}
+}
+
   </script>
 
   <script>
@@ -910,23 +916,10 @@
     }, 3000);
   </script>
 
-
-<script>
-function goFullscreen() {
-  const el = document.documentElement;
-  if (el.requestFullscreen) el.requestFullscreen();
-  else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen(); // Safari
-  else if (el.msRequestFullscreen) el.msRequestFullscreen(); // Edge
-}
-</script>
-
-
-
-  
-
   <!-- Google Maps per ultimo -->
   <script defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwo0r8Kd1FVCNxFmsrZ9OqcuJsAqa_v-Q&libraries=geometry&v=quarterly&callback=initMap">
   </script>
 </body>
 </html>
+
