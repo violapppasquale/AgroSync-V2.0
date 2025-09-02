@@ -277,7 +277,7 @@
   <!-- Beep via WebAudio: il contesto parte al click "Avvia GPS" -->
   <script>
     let audioCtx = null;
-    function beep(ms = 800, freq = 880) {
+    function beep(ms = 1000, freq = 880) {
       try {
         if (!audioCtx) return;
         const o = audioCtx.createOscillator();
