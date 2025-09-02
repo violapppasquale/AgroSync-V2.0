@@ -276,24 +276,19 @@
 
   <!-- Beep via WebAudio: il contesto parte al click "Avvia GPS" -->
   <script>
-    function beep(ms = 800, freq = 880, vibrate = true) {
-  try {
-    if (!audioCtx) return;
-    const o = audioCtx.createOscillator();
-    const g = audioCtx.createGain();
-    o.connect(g); g.connect(audioCtx.destination);
-    o.type = 'sine'; o.frequency.value = freq;
-    g.gain.value = 0.05;
-    o.start();
-    setTimeout(() => { o.stop(); }, ms);
-
-    // Se supportato, vibra per la stessa durata del beep
-    if (vibrate && navigator.vibrate) {
-      navigator.vibrate(ms);
+    let audioCtx = null;
+    function beep(ms = 800, freq = 880) {
+      try {
+        if (!audioCtx) return;
+        const o = audioCtx.createOscillator();
+        const g = audioCtx.createGain();
+        o.connect(g); g.connect(audioCtx.destination);
+        o.type = 'sine'; o.frequency.value = freq;
+        g.gain.value = 0.05;
+        o.start();
+        setTimeout(() => { o.stop(); }, ms);
+      } catch (e) {}
     }
-  } catch (e) {}
-}
-
   </script>
 
   <script>
@@ -922,4 +917,3 @@
   </script>
 </body>
 </html>
-
